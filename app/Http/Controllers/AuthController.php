@@ -13,8 +13,23 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
+        return new UserResource($request->user());
+    }
+
+    /**
+     * Update authenticated user information.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $data = $request->only('name', 'email');
+
+        $request->user()->update($data);
+
         return new UserResource($request->user());
     }
 }
